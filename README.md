@@ -112,8 +112,6 @@ Good luck, and remember to leverage the provided resources and your own research
 
 0. High-Level Package Diagram
 
-   <img width="592" height="839" alt="image" src="https://github.com/user-attachments/assets/2195d607-5b3e-4d38-99e3-9839d49afab2" />
-
 Objective
 
 Create a high-level package diagram that illustrates the three-layer architecture of the HBnB application and the communication between these layers via the facade pattern. This diagram will provide a conceptual overview of how the different components of the application are organized and how they interact with each other.
@@ -210,8 +208,6 @@ Repo:
 
 1. Detailed Class Diagram for Business Logic Layer
 
-<img width="821" height="803" alt="image" src="https://github.com/user-attachments/assets/37ef8e4f-d583-4896-9436-de8a9b21cd1e" />
-
 Objective
 
 Design a detailed class diagram for the Business Logic layer of the HBnB application. This diagram will depict the entities within this layer, their attributes, methods, and the relationships between them. The primary goal is to provide a clear and detailed visual representation of the core business logic, focusing on the key entities: User, Place, Review, and Amenity.
@@ -288,14 +284,6 @@ Repo:
 
 
 2. Sequence Diagrams for API Calls
-
-<img width="769" height="625" alt="image" src="https://github.com/user-attachments/assets/9e93307b-e133-4cb5-8fb6-bee31781e03d" />
-
-<img width="684" height="566" alt="image" src="https://github.com/user-attachments/assets/8b787687-0896-47f0-bcd0-74594f58447d" />
-
-<img width="762" height="611" alt="image" src="https://github.com/user-attachments/assets/243580b2-7393-4722-9923-1294b599c41b" />
-
-<img width="868" height="530" alt="image" src="https://github.com/user-attachments/assets/df9b22d9-cd31-4634-be97-267b072be4c2" />
 
 Objective
 
