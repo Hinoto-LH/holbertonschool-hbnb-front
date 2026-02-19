@@ -462,34 +462,37 @@ It’s important to note that, at this stage, you will focus only on implementin
 Objectives
 By the end of this project, you should be able to:
 
-Set Up the Project Structure:
-Organize the project into a modular architecture, following best practices for Python and Flask applications.
-Create the necessary packages for the Presentation and Business Logic layers.
-Implement the Business Logic Layer:
-Develop the core classes for the business logic, including User, Place, Review, and Amenity entities.
-Implement relationships between entities and define how they interact within the application.
-Implement the facade pattern to simplify communication between the Presentation and Business Logic layers.
-Build RESTful API Endpoints:
-Implement the necessary API endpoints to handle CRUD operations for Users, Places, Reviews, and Amenities.
-Use flask-restx to define and document the API, ensuring a clear and consistent structure.
-Implement data serialization to return extended attributes for related objects. For example, when retrieving a Place, the API should include details such as the owner’s first_name, last_name, and relevant amenities.
+    Set Up the Project Structure:
+    Organize the project into a modular architecture, following best practices for Python and Flask applications.
+    Create the necessary packages for the Presentation and Business Logic layers.
+    Implement the Business Logic Layer:
+    Develop the core classes for the business logic, including User, Place, Review, and Amenity entities.
+    Implement relationships between entities and define how they interact within the application.
+    Implement the facade pattern to simplify communication between the Presentation and Business Logic layers.
+    Build RESTful API Endpoints:
+    Implement the necessary API endpoints to handle CRUD operations for Users, Places, Reviews, and Amenities.
+    Use flask-restx to define and document the API, ensuring a clear and consistent structure.
+    Implement data serialization to return extended attributes for related objects. For example, when retrieving a Place, the API should           include details such as the owner’s first_name, last_name, and relevant amenities.
+
 Test and Validate the API:
-Ensure that each endpoint works correctly and handles edge cases appropriately.
-Use tools like Postman or cURL to test your API endpoints.
-Project Vision and Scope
+
+    Ensure that each endpoint works correctly and handles edge cases appropriately.
+    Use tools like Postman or cURL to test your API endpoints.
+    Project Vision and Scope
+
 The implementation in this part is focused on creating a functional and scalable foundation for the application. You will be working on:
 
-Presentation Layer: Defining the services and API endpoints using Flask and flask-restx. You’ll structure the endpoints logically, ensuring clear paths and parameters for each operation.
+    Presentation Layer: Defining the services and API endpoints using Flask and flask-restx. You’ll structure the endpoints logically, ensuring clear paths and parameters for each operation.
 
-Business Logic Layer: Building the core models and logic that drive the application’s functionality. This includes defining relationships, handling data validation, and managing interactions between different components.
+    Business Logic Layer: Building the core models and logic that drive the application’s functionality. This includes defining relationships, handling data validation, and managing interactions between different components.
 
 At this stage, you won’t need to worry about user authentication or access control. However, you should ensure that the code is modular and organized, making it easy to integrate these features in Part 3.
 
 Learning Objectives
 This part of the project is designed to help you achieve the following learning outcomes:
 
-Modular Design and Architecture: Learn how to structure a Python application using best practices for modularity and separation of concerns.
-API Development with Flask and flask-restx: Gain hands-on experience in building RESTful APIs using Flask, focusing on creating well-documented and scalable endpoints.
-Business Logic Implementation: Understand how to translate documented designs into working code, implementing core business logic in a structured and maintainable manner.
-Data Serialization and Composition Handling: Practice returning extended attributes in API responses, handling nested and related data in a clear and efficient way.
-Testing and Debugging: Develop skills in testing and validating APIs, ensuring that your endpoints handle requests correctly and return appropriate responses.
+    Modular Design and Architecture: Learn how to structure a Python application using best practices for modularity and separation of concerns.
+    API Development with Flask and flask-restx: Gain hands-on experience in building RESTful APIs using Flask, focusing on creating well-documented and scalable endpoints.
+    Business Logic Implementation: Understand how to translate documented designs into working code, implementing core business logic in a structured and maintainable manner.
+    Data Serialization and Composition Handling: Practice returning extended attributes in API responses, handling nested and related data in a clear and efficient way.
+    Testing and Debugging: Develop skills in testing and validating APIs, ensuring that your endpoints handle requests correctly and return appropriate responses.
