@@ -1,7 +1,6 @@
-**HBnB Technical Architecture Document**
+HBnB Technical Architecture Document
 
-**1. Introduction**
-
+1. Introduction
 HBnB Evolution is a simplified AirBnB-like platform that enables user management, place listing, review submission, and amenity management. The system follows a three-layer architecture composed of the Presentation, Business Logic, and Persistence layers.
 This documentation includes:
 A high-level package diagram illustrating the layered architecture and facade pattern.
@@ -15,8 +14,7 @@ Sequence diagrams showing interactions for key API operations.
 
 The goal of this document is to clearly define the system structure, business rules, and data flow to ensure a consistent and maintainable implementation.
 
-**2. Architectural Foundations**
-
+2. Architectural Foundations
 The HBnB system follows a layered architecture pattern composed of the following layers:
 Presentation Layer (API) – Handles HTTP requests and responses.
 
@@ -39,7 +37,7 @@ Testability
 
 
 
-**2. High-Level Package Diagram**
+2. High-Level Package Diagram
 
 HBnB Package Diagram Analysis
 Overview
@@ -77,10 +75,11 @@ Role in Project
 This high-level architecture serves as the blueprint for organizing code structure, defining inter-layer interfaces, and maintaining architectural consistency throughout development.
 
 
-<img width="322" height="630" alt="image" src="https://github.com/user-attachments/assets/06cd2b1c-2e23-4c90-8371-bf33aa9be595" />
 
 
-**3. Detailed Class Diagram For Business Logic Layer**
+
+
+3. Detailed Class Diagram For Business Logic Layer
 
 Overview
 This diagram details the core domain entities of the HBnB Business Logic Layer, showing attributes, methods, and relationships that implement business rules between the Presentation and Persistence layers.
@@ -107,14 +106,19 @@ Role in Architecture
 Translates business logic into database schemas, API contracts, and validation rules. Bridges API requests (above) with data persistence (below).
 
 
-<img width="575" height="578" alt="image" src="https://github.com/user-attachments/assets/c9578065-35a2-4e55-a132-587949fb84f4" />
 
 
-**4. Sequence Diagrams**
+
+
+
+
+
+
+
+4. Sequence Diagrams
 
 1. User Registration - POST /users
 
-<img width="769" height="625" alt="image" src="https://github.com/user-attachments/assets/02b10a74-f3bb-477c-9407-be4e81ce3625" />
 
 
 In this sequence diagram, a new user signs up for an account. The user sends their registration data to the API, which forwards it to the business logic layer. The business logic validates the input data and securely hashes the password. Once validated, it saves the user information to the database. The database confirms the user was created, and this confirmation travels back through the layers, returning a user object to the user with a 201 Created status.
@@ -125,7 +129,6 @@ In this sequence diagram, a new user signs up for an account. The user sends the
 
 2. Place Creation - POST /places
 
-<img width="684" height="566" alt="image" src="https://github.com/user-attachments/assets/0687b860-d5b5-4d93-bd37-ee4a9ea3576e" />
 
 
 In this sequence diagram, an authenticated user creates a new property listing. The user submits the place details to the API, which passes the data to the business logic layer. The business logic first verifies the user's identity to ensure they're authorized to create a listing. It then builds and validates the place entity before saving it to the database. Once the database confirms the place was created, this confirmation is sent back through all layers, returning the created place details to the user with a 201 Created status.
@@ -134,7 +137,6 @@ In this sequence diagram, an authenticated user creates a new property listing. 
 
 3. Review Submission - POST /reviews
 
-<img width="762" height="611" alt="image" src="https://github.com/user-attachments/assets/2dabbe17-e581-422c-a75b-1c48dd7333d2" />
 
 
 In this sequence diagram, a user submits a review for a property they've stayed at. The user sends their rating and comment to the API, which forwards it to the business logic layer. The business logic verifies that the place exists and that the user is eligible to review it. It then constructs the review entity with proper validation before saving it to the database. The database confirms the review was created, and this acknowledgment travels back through the layers, returning the review details to the user with a 201 Created status.
@@ -143,13 +145,11 @@ In this sequence diagram, a user submits a review for a property they've stayed 
 
 4. Fetching Places List - GET /places
 
-<img width="868" height="530" alt="image" src="https://github.com/user-attachments/assets/fffbf098-39bf-43fe-88c1-592467b2d51b" />
 
 
 In this sequence diagram, a user searches for available places. The user sends a request with optional search filters to the API, which asks the business logic layer to retrieve the matching data. The business logic queries the database for places that meet the criteria. Once the data is found, it's returned from the database as a list of places. The business logic transforms this into a presentation-friendly format and sends it back through the API to the user with a 200 OK status.
 
 
-**Conclusion:**
-
+Conclusion
 The HBnB architecture, organized into three layers (Presentation, Business Logic, Persistence) with a Facade pattern, ensures a clear separation of responsibilities. The package, class, and sequence diagrams illustrate the key entities and data flows, ensuring maintainability, scalability, and testability. This document serves as a solid reference for the development and future evolution of the platform.
 

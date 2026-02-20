@@ -458,7 +458,6 @@ Recommendations
     Proofread Carefully: Errors in a technical document can lead to misunderstandings during implementation, so take the time to thoroughly proofread your work.
 
 Repo:
-          GitHub repository: https://github.com/arthurmoulard/holbertonschool-hbnb
 
     GitHub repository: holbertonschool-hbnb
     Directory: part1
