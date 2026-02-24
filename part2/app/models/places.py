@@ -1,17 +1,22 @@
 #!/usr/bin/python3
+import BaseModel
 import uuid
 from datetime import datetime
 
 
 class Place(BaseModel):
     def __init__(self, id, title, description, price, latitude, longitude, owner):
-        self.id = id
+        self.id = str(uuid.uuid4())
         self.title = title
         self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        self.reviews = []
+        self.amenities = []
 
     @property
     def title(self):
@@ -30,7 +35,9 @@ class Place(BaseModel):
     
     @price.setter
     def price(self, value):
-        pass
+        if not isinstance(value, (int, float)) or value <= 0:
+            raise ValueError("Le prix doit être un nombre positif.")
+        self._price = float(value)
     
     @property
     def longitude(self):
@@ -38,7 +45,9 @@ class Place(BaseModel):
     
     @longitude.setter
     def longitude(self, value):
-        pass
+        if not isinstance(value, (int, float)) or not (-180.0 <= value <= 180.0):
+            raise ValueError("La longitude doit être comprise entre -180.0 et 180.0.")
+        self._longitude = float(value)
     
     @property
     def latitude(self):
@@ -46,7 +55,9 @@ class Place(BaseModel):
     
     @latitude.setter
     def latitude(self, value):
-        pass
+        if not isinstance(value, (int, float))or not (-90.0 <= value <= 90.0):
+            raise ValueError("La latitude doit être comprise entre -90.0 et 90.0.")
+        self._latitude = float(value)
     
     @property
     def owner(self):
@@ -54,14 +65,23 @@ class Place(BaseModel):
     
     @owner.setter
     def owner(self, user):
-        pass
+        if not user or not hasattr(user, 'id'):
+            raise ValueError("Le propriétaire doit être une instance valide de User.")
+        self._owner = user
 
 
     def add_review(self, review):
-        pass
+        if not hasattr(review, 'id'):
+            raise ValueError("L'avis doit être une instance valide de Review.")
+        self.reviews.append(review)
+        self.save()
 
     def add_amenity(self, amenity):
-        pass
+        if not hasattr(amenity, 'id'):
+            raise ValueError("L'équipement doit être une instance valide de Amenity.")
+        if amenity not in self.amenities:
+            self.amenities.append(amenity)
+            self.save()
 
     def save(self):
         self.update_at = datetime.now()
