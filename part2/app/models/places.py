@@ -35,7 +35,6 @@ class Place(BaseModel):
         if not isinstance(value, (int, float)) or value <= 0:
             raise ValueError("Le prix doit être un nombre positif.")
         self._price = float(value)
-        self._price = self.price
 
     @property
     def longitude(self):
@@ -49,7 +48,7 @@ class Place(BaseModel):
 
     @property
     def latitude(self):
-        return self.latitude
+        return self._latitude
 
     @latitude.setter
     def latitude(self, value):
@@ -59,7 +58,7 @@ class Place(BaseModel):
 
     @property
     def owner(self):
-        return self.owner
+        return self._owner
 
     @owner.setter
     def owner(self, user):
