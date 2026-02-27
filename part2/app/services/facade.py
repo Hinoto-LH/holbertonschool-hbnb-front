@@ -1,6 +1,9 @@
 from app.persistence.repository import InMemoryRepository
 from app.models.users import User
 from app.models.places import Place
+from app.models.amenities import Amenity
+from app.models.reviews import Review
+# from app.models.amenities import Amenity
 
 
 class HBnBFacade:
@@ -17,6 +20,9 @@ class HBnBFacade:
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
+
+    def get_all_user(self):
+        return self.user_repo.get_all()
 
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
