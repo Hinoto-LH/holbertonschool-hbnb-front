@@ -66,6 +66,10 @@ class Place(BaseModel):
             raise ValueError("Le propriétaire doit être une instance valide de User.")
         self._owner = user
 
+    @property
+    def owner_id(self):
+        return self._owner.id
+
     def add_review(self, review):
         if not hasattr(review, 'id'):
             raise ValueError("L'avis doit être une instance valide de Review.")

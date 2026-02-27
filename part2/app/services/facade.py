@@ -22,7 +22,7 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
 
     def create_place(self, place_data):
-        # Placeholder for logic to create a place, including validation for price, latitude, and longitude
+
         price = place_data.get("price", 0)
         if price < 0:
             raise ValueError("Price must be positive")
@@ -35,11 +35,14 @@ class HBnBFacade:
         if longitude is not None and not -180 <= longitude <= 180:
             raise ValueError("Longitude must be between -180 and 180")
 
-        owner_id = place_data.get("owner_id")
-        if not owner_id or not self.user_repo.get(owner_id):
+        owner_id = place_data.pop("owner_id")
+        user = self.user_repo.get(owner_id)
+
+        if not user:
             raise ValueError("Owner not found")
 
-        place = Place(**place_data)
+        place = Place(owner=user, **place_data)
+
         self.place_repo.add(place)
         return place
 
