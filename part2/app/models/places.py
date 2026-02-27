@@ -56,7 +56,6 @@ class Place(BaseModel):
         if not isinstance(value, (int, float)) or value <= 0:
             raise ValueError("Le prix doit être un nombre positif.")
         self._price = float(value)
-        self._price = self.price
 
     @property
     def longitude(self):
@@ -70,7 +69,7 @@ class Place(BaseModel):
 
     @property
     def latitude(self):
-        return self.latitude
+        return self._latitude
 
     @latitude.setter
     def latitude(self, value):
@@ -80,13 +79,17 @@ class Place(BaseModel):
 
     @property
     def owner(self):
-        return self.owner
+        return self._owner
 
     @owner.setter
     def owner(self, user):
         if not user or not hasattr(user, 'id'):
             raise ValueError("Le propriétaire doit être une instance valide de User.")
         self._owner = user
+
+    @property
+    def owner_id(self):
+        return self._owner.id
 
     def add_review(self, review):
         if not hasattr(review, 'id'):
