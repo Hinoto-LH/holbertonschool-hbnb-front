@@ -133,3 +133,4 @@ from app.models.base_model import BaseModel
 
 obj = BaseModel()
 print(obj.id)
+```

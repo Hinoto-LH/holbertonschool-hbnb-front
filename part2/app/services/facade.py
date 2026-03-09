@@ -46,7 +46,6 @@ class HBnBFacade:
         return amenity
 
     def create_place(self, place_data):
-
         price = place_data.get("price", 0)
         if price < 0:
             raise ValueError("Price must be positive")
