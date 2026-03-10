@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 
+
 api = Namespace('users', description='User operations')
 
 # Define the user model for input validation and documentation
@@ -94,4 +95,4 @@ class UserResource(Resource):
                 'first_name': updated_user.first_name,
                 'last_name': updated_user.last_name,
                 'email': updated_user.email
-                }, 200
+                }, 200  # ------------------------admin------------------------

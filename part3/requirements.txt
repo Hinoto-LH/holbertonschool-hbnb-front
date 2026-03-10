@@ -4,3 +4,5 @@ Flask-SQLAlchemy
 mysqlclient
 python-dotenv
 bcrypt
+email_validator
+
