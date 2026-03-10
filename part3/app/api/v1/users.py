@@ -9,7 +9,9 @@ user_model = api.model('User', {
                                 description='First name of the user'),
     'last_name': fields.String(required=True,
                                description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True,
+                              description='Password of the user')
 })
 
 
@@ -36,7 +38,6 @@ class UserList(Resource):
                 'first_name': new_user.first_name,
                 'last_name': new_user.last_name,
                 'email': new_user.email,
-                'password': new_user.password
             }, 201
 
         except ValueError as e:
