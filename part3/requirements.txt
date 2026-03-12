@@ -1,8 +1,6 @@
 Flask
 Flask-JWT-Extended
 Flask-SQLAlchemy
+bcrypt
 mysqlclient
 python-dotenv
-bcrypt
-email_validator
-
