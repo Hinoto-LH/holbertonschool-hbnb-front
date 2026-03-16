@@ -18,7 +18,7 @@ class User(BaseModel):
         places (list): List of Place objects owned by the user.
     """
 
-    def __init__(self, first_name, last_name, email, password):
+    def __init__(self, first_name, last_name, email, password, is_admin=False):
         """Initialize a new User instance with validation."""
         super().__init__()
         self.__first_name = None
@@ -32,6 +32,7 @@ class User(BaseModel):
         self.places = []
         self.__password = None
         self.password = password
+        self.is_admin = is_admin
 
     @property
     def first_name(self):
