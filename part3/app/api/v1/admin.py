@@ -112,7 +112,7 @@ class AdminUserResource(Resource):
                 return {'error': 'Email already in use'}, 400
 
         try:
-            updated = facade.update_user(user_id, data)
+            updated = facade.update_user(user_id, data, is_admin=True)
             return {
                 'id': updated.id,
                 'first_name': updated.first_name,

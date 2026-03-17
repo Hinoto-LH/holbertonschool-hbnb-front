@@ -30,11 +30,14 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
 
-    def update_user(self, user_id, user_data):
+    def update_user(self, user_id, user_data, is_admin=False):
+        print(f"DEBUG is_admin={is_admin}")
+        print(f"DEBUG user_data={user_data}")
         user = self.get_user(user_id)
         if not user:
             return None
-        self.user_repo.update(user_id, user_data)
+        user.update(user_data, is_admin=is_admin)
+        user.save()
         return self.get_user(user_id)
 
 # --------------------- Amenity ---------------------

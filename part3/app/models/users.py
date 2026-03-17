@@ -95,6 +95,18 @@ class User(BaseModel):
             self.__email = valid.normalized
         except EmailNotValidError:
             raise ValueError("Invalid email address format")
+        
+
+    def update(self, data, is_admin=False):
+        print(f"DEBUG User.update is_admin={is_admin}")
+        for key, value in data.items():
+            if key in ['email', 'password'] and not is_admin:
+                raise ValueError("You cannot modify email or password.")
+            if key == 'password':
+                self.hash_password(value)
+            elif hasattr(self, key):
+                setattr(self, key, value)
+                self.save()
 
     def add_review(self, review):
         """Add a review to the user.
