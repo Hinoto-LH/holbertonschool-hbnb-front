@@ -256,4 +256,3 @@ class AdminReviewResource(Resource):
 
         facade.delete_review(review_id)
         return {'message': 'Review deleted successfully'}, 200
-    

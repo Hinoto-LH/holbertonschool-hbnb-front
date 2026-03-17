@@ -95,18 +95,31 @@ class User(BaseModel):
             self.__email = valid.normalized
         except EmailNotValidError:
             raise ValueError("Invalid email address format")
-        
 
     def update(self, data, is_admin=False):
-        print(f"DEBUG User.update is_admin={is_admin}")
+        print(f"DEBUG: Data reçue -> {data}")
+        print(f"DEBUG: Objet à modifier (ID) -> {self.id}")
         for key, value in data.items():
+
+            # 1. Sécurité : restriction pour les non-admins
             if key in ['email', 'password'] and not is_admin:
                 raise ValueError("You cannot modify email or password.")
+
+            # 2. Logique spécifique au mot de passe
             if key == 'password':
+                # On assume que hash_password s'occupe de setattr(self, 'password', hashed_value)
                 self.hash_password(value)
+
+            # 3. Logique pour les autres attributs
             elif hasattr(self, key):
                 setattr(self, key, value)
-                self.save()
+
+        # 4. Sauvegarde UNIQUE à la fin de la mise à jour
+        try:
+            self.save()
+        except Exception as e:
+            # C'est ici que tu pourras voir si c'est une erreur de base de données (ex: email unique)
+            raise ValueError(f"Erreur lors de la sauvegarde : {str(e)}")
 
     def add_review(self, review):
         """Add a review to the user.
