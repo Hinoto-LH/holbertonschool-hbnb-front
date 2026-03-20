@@ -1,132 +1,100 @@
-#!/usr/bin/python3
+from app import db
 from app.models.BaseModel import BaseModel
-from flask_restx import Namespace, fields
+from sqlalchemy.orm import validates
 
-
-api = Namespace('places', description='Place operations')
-
-user_model = api.model('PlaceUser', {
-    'id': fields.String(description='User ID'),
-    'first_name': fields.String(description='First name'),
-    'last_name': fields.String(description='Last name'),
-})
-
-amenity_model = api.model('PlaceAmenity', {
-    'id': fields.String(description='Amenity ID'),
-    'name': fields.String(description='Name of the amenity')
-})
-
-review_model = api.model('PlaceReview', {
-    'id': fields.String(description='Review ID'),
-    'text': fields.String(description='Text of the review'),
-    'rating': fields.Integer(description='Rating of the place (1-5)'),
-    'user_id': fields.String(description='ID of the user')
-})
-
-place_model = api.model('Place', {
-    'title': fields.String(required=True, description='Title of the place'),
-    'description': fields.String(description='Description of the place'),
-    'price': fields.Float(required=True, description='Price per night'),
-    'latitude': fields.Float
-    (required=True, description='Latitude of the place'),
-    'longitude': fields.Float
-    (required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
-    'owner': fields.Nested(user_model, description='Owner of the place'),
-    'amenities': fields.List
-    (fields.Nested(amenity_model), description='List of amenities'),
-    'reviews': fields.List
-    (fields.Nested(review_model), description='List of reviews')
-})
+# Table d'association many-to-many Place <-> Amenity
+place_amenity = db.Table(
+    'place_amenity',
+    db.Column('place_id', db.String(36),
+              db.ForeignKey('places.id', ondelete='CASCADE'),
+              primary_key=True),
+    db.Column('amenity_id', db.String(36),
+              db.ForeignKey('amenities.id', ondelete='CASCADE'),
+              primary_key=True)
+)
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner):
-        super().__init__()
-        self.title = title
-        self.description = description
-        self.price = price
-        self.latitude = latitude
-        self.longitude = longitude
-        self.owner = owner
-        self.reviews = []
-        self.amenities = []
+    __tablename__ = 'places'
 
-    @property
-    def title(self):
-        return self._title
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    price = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
 
-    @title.setter
-    def title(self, char):
-        if not char or not isinstance(char, str):
-            raise TypeError
-        ("Le titre est obligatoire et doit etre une chaine de caractères.")
-        if len(char) > 100:
-            raise ValueError("Le titre ne peut pas dépasser 100 caractères.")
-        self._title = char
+    # Clé étrangère vers User
+    owner_id = db.Column(
+        db.String(36),
+        db.ForeignKey('users.id', ondelete='CASCADE'),
+        nullable=False
+    )
 
-    @property
-    def price(self):
-        return self._price
+    # Relations
+    owner = db.relationship(
+        'User',
+        backref=db.backref('places', lazy=True, cascade='all, delete-orphan')
+    )
+    amenities = db.relationship(
+        'Amenity',
+        secondary=place_amenity,
+        lazy='subquery',
+        backref=db.backref('places', lazy=True)
+    )
 
-    @price.setter
-    def price(self, value):
+    @validates('title')
+    def validate_title(self, key, value):
+        if not value or not isinstance(value, str):
+            raise ValueError("title is required and must be a string")
+        if len(value) > 100:
+            raise ValueError("title cannot exceed 100 characters")
+        return value
+
+    @validates('price')
+    def validate_price(self, key, value):
         if not isinstance(value, (int, float)) or value <= 0:
-            raise ValueError("Le prix doit être un nombre positif.")
-        self._price = float(value)
+            raise ValueError("price must be a positive number")
+        return float(value)
 
-    @property
-    def longitude(self):
-        return self._longitude
+    @validates('latitude')
+    def validate_latitude(self, key, value):
+        if value is not None:
+            if not isinstance(value, (int, float)) or \
+                    not (-90.0 <= value <= 90.0):
+                raise ValueError(
+                    "latitude must be between -90.0 and 90.0")
+        return value
 
-    @longitude.setter
-    def longitude(self, value):
-        if not isinstance(value, (int, float)) or not\
-                (-180.0 <= value <= 180.0):
-            raise ValueError
-        ("La longitude doit être comprise entre -180.0 et 180.0.")
-        self._longitude = float(value)
+    @validates('longitude')
+    def validate_longitude(self, key, value):
+        if value is not None:
+            if not isinstance(value, (int, float)) or \
+                    not (-180.0 <= value <= 180.0):
+                raise ValueError(
+                    "longitude must be between -180.0 and 180.0")
+        return value
 
-    @property
-    def latitude(self):
-        return self._latitude
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'price': self.price,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'owner_id': self.owner_id
+        }
 
-    @latitude.setter
-    def latitude(self, value):
-        if not isinstance(value, (int, float)) or not (-90.0 <= value <= 90.0):
-            raise ValueError
-        ("La latitude doit être comprise entre -90.0 et 90.0.")
-        self._latitude = float(value)
-
-    @property
-    def owner(self):
-        return self._owner
-
-    @owner.setter
-    def owner(self, user):
-        if not user or not hasattr(user, 'id'):
-            raise ValueError
-        ("Le propriétaire doit être une instance valide de User.")
-        self._owner = user
-
-    @property
-    def owner_id(self):
-        return self._owner.id
-
-    def add_review(self, review):
-        if not hasattr(review, 'id'):
-            raise ValueError("L'avis doit être une instance valide de Review.")
-        self.reviews.append(review)
-        self.save()
-
-    def add_amenity(self, amenity):
-        if not hasattr(amenity, 'id'):
-            raise ValueError
-        ("L'équipement doit être une instance valide de Amenity.")
-        if amenity not in self.amenities:
-            self.amenities.append(amenity)
-            self.save()
-
-    def __repr__(self):
-        return f"<Place id={self.id}\
-                title='{self.title} owner={self.owner.id}>"
+    def to_dict_detailed(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'price': self.price,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'owner': self.owner.to_dict(),
+            'amenities': [
+                {'id': a.id, 'name': a.name} for a in self.amenities
+            ]
+        }
