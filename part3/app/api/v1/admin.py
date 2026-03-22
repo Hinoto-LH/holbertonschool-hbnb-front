@@ -4,7 +4,7 @@ from app.services import facade
 
 api = Namespace('admin', description='Admin operations')
 
-# ── Models ────────────────────────────────────────────────────────────────────
+# ── Models ───────────────────────────────────────────────────────────────────
 
 user_model = api.model('AdminUser', {
     'first_name': fields.String(required=True),
@@ -37,7 +37,8 @@ review_model = api.model('AdminReview', {
     'rating': fields.Integer()
 })
 
-# ── Helper ────────────────────────────────────────────────────────────────────
+# ── Helper ───────────────────────────────────────────────────────────────────
+
 
 def check_admin():
     """
@@ -48,7 +49,8 @@ def check_admin():
         return False, ({'error': 'Admin privileges required'}, 403)
     return True, None
 
-# ── Users ─────────────────────────────────────────────────────────────────────
+# ── Users ────────────────────────────────────────────────────────────────────
+
 
 @api.route('/users/')
 class AdminUserList(Resource):
@@ -103,7 +105,8 @@ class AdminUserResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 400
 
-# ── Amenities ─────────────────────────────────────────────────────────────────
+# ── Amenities ────────────────────────────────────────────────────────────────
+
 
 @api.route('/amenities/')
 class AdminAmenityList(Resource):
@@ -146,7 +149,8 @@ class AdminAmenityResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 400
 
-# ── Places ────────────────────────────────────────────────────────────────────
+# ── Places ───────────────────────────────────────────────────────────────────
+
 
 @api.route('/places/<place_id>')
 class AdminPlaceResource(Resource):
@@ -185,7 +189,8 @@ class AdminPlaceResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 404
 
-# ── Reviews ───────────────────────────────────────────────────────────────────
+# ── Reviews ──────────────────────────────────────────────────────────────────
+
 
 @api.route('/reviews/<review_id>')
 class AdminReviewResource(Resource):
@@ -223,4 +228,3 @@ class AdminReviewResource(Resource):
             return {'message': 'Review deleted successfully'}, 200
         except ValueError as e:
             return {'error': str(e)}, 404
-        
