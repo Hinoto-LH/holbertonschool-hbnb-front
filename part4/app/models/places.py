@@ -96,5 +96,6 @@ class Place(BaseModel):
             'owner': self.owner.to_dict(),
             'amenities': [
                 {'id': a.id, 'name': a.name} for a in self.amenities
-            ]
+            ],
+            'reviews': [r.to_dict() for r in self.reviews]
         }
