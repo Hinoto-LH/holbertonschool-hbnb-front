@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - HBnB</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/Favicon.png">
+  </head>
+  <body>
+
+    <!-- Header -->
+    <header>
+      <div>
+        <a href="index.html">
+          <img class="logo" src="images/Logo.png" alt="HBnB logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html" class="login-button">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <form id="register-form">
+        <h2>Create an account</h2>
+
+        <label for="first-name">First name :</label>
+        <input type="text" id="first-name" name="first-name" placeholder="John" autofocus required>
+
+        <label for="last-name">Last name :</label>
+        <input type="text" id="last-name" name="last-name" placeholder="Doe" required>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" placeholder="email@example.com" required>
+
+        <label for="password">Password :</label>
+        <input type="password" id="password" name="password" placeholder="password" required>
+
+        <button class="login-button" type="submit">Register</button>
+
+        <p class="form-switch">Already have an account? <a href="login.html">Login</a></p>
+      </form>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <img src="images/Logo.png" alt="HBnB logo">
+      <address>
+        106 Av. Pierre de Coubertin<br>
+        53000 Laval, France
+      </address>
+
+      <hr>
+
+      <p>2026 HBnB, made by A&A&M, All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
